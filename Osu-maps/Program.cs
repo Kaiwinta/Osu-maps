@@ -5,9 +5,9 @@ using System;
 namespace Osu_maps
 {
 
-    class Program
+    public class Program
     {
-        static int Main(string[] args)
+        public static int Main(string[] args)
         {
             String musicPath = GetArg(args, new string[] { "--music", "-m" });
             if (musicPath == String.Empty)
@@ -26,20 +26,26 @@ namespace Osu_maps
                 {
                     parser = new WavParser(musicPath);
                 }
+                else
+                {
+                    throw new ParserInitException("No available parser for this extension");
+                }
                 parser?.ParseFile();
             }
             catch (NotImplementedException ex)
             {
                 Console.Error.WriteLine($"Error: {ex.Message}");
+                return 84;
             }
             catch (ParserInitException ex)
             {
                 Console.Error.WriteLine($"Parser Error: {ex.Message}");
+                return 84;
             }
             return 0;
         }
 
-        static string GetArg(string[] args, string[] flags, string def = "")
+        public static string GetArg(string[] args, string[] flags, string def = "")
         {
             foreach (var flag in flags)
             {
