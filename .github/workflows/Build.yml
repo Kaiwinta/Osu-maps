@@ -23,9 +23,20 @@ jobs:
               run: dotnet build --no-restore Osu-maps/
 
             - name: Run tests with code coverage
-              run: dotnet test --collect:"Code Coverage" Osu-maps/ --no-build
+              run: dotnet test --collect:"XPlat Code Coverage" Osu-maps/ --no-build
+            
+            - name: Find coverage file
+              id: coverage
+              run: |
+                echo "##[group]Locate coverage file"
+                FILE=$(find Osu-maps/TestResults -name 'coverage.cobertura.xml' | head -n 1)
+                echo "Found coverage file: $FILE"
+                echo "coverage_file=$FILE" >> $GITHUB_OUTPUT
+                echo "##[endgroup]"
             
             - name: Upload code coverage results
               uses: codecov/codecov-action@v2
               with:
                 token: ${{ secrets.CODECOV_TOKEN }}
+                file: ${{ steps.coverage.outputs.coverage_file }}
+                fail_ci_if_error: true
