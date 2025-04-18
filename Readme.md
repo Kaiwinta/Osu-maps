@@ -14,3 +14,5 @@ This project is developed in **C#**.
 - **Millcachan**  
 
 Both contributors are students at **Epitech**.
+
+[![codecov](https://codecov.io/gh/Kaiwinta/Osu-maps/branch/dev/graph/badge.svg)](https://codecov.io/gh/Kaiwinta/Osu-maps)
