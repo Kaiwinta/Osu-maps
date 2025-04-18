@@ -5,7 +5,6 @@ on:
         branches: dev
 
 jobs:
-
     check_project_compilation_and_tests:
         runs-on: ubuntu-latest
         steps:
@@ -18,10 +17,10 @@ jobs:
                 dotnet-version: '9.x'
 
             - name: Restore dependencies
-              run: dotnet restore
+              run: dotnet restore Osu-maps/
 
             - name: Build the project
-              run: dotnet build --no-restore
+              run: dotnet build --no-restore Osu-maps/
 
             - name: Run the project
-              run: dotnet run --no-build
+              run: dotnet run --no-build --project Osu-maps/
