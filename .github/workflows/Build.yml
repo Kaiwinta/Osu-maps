@@ -23,7 +23,7 @@ jobs:
               run: dotnet build --no-restore Osu-maps/
 
             - name: Run tests with code coverage
-              run: dotnet test --collect:"XPlat Code Coverage" --results-directory coverage Osu-maps/ --no-build
+              run: dotnet test --collect:"XPlat Code Coverage" --results-directory coverage Osu-maps/ --no-build -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
             
             - name: Find coverage file
               id: coverage
