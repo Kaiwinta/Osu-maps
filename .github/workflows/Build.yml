@@ -25,11 +25,18 @@ jobs:
             - name: Run tests with code coverage
               run: dotnet test --collect:"XPlat Code Coverage" --results-directory coverage Osu-maps/ --no-build -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
             
-            - name: Upload coverage to Codecov
+            - name: Find coverage file
+              id: coverage
+              run: |
+                echo "##[group]Locate coverage file"
+                FILE=$(find coverage -name 'coverage.cobertura.xml' | head -n 1)
+                echo "Found coverage file: $FILE"
+                echo "coverage_file=$FILE" >> $GITHUB_OUTPUT
+                echo "##[endgroup]"
+            
+            - name: Upload code coverage results
               uses: codecov/codecov-action@v2
               with:
                 token: ${{ secrets.CODECOV_TOKEN }}
+                file: ${{ steps.coverage.outputs.coverage_file }}
                 fail_ci_if_error: true
-                file: ./coverage/**/coverage.cobertura.xml
-                flags: unittests
-                verbose: true
