@@ -22,5 +22,10 @@ jobs:
             - name: Build the project
               run: dotnet build --no-restore Osu-maps/
 
-            - name: Run the project
-              run: dotnet run --no-build --project Osu-maps/
+            - name: Run tests with code coverage
+              run: dotnet test --collect:"Code Coverage"
+            
+            - name: Upload code coverage results
+              uses: codecov/codecov-action@v2
+              with:
+                token: ${{ secrets.CODECOV_TOKEN }}
