@@ -40,5 +40,38 @@ namespace Osu_maps.Tests
             Assert.NotNull(musicParser);
             Assert.Equal(validFilename, musicParser.Filename);
         }
+
+        [Fact]
+        public void ParseFile_ShouldThrowException_WhenOnBaseClass()
+        {
+            string validFilename = "song.mp3";
+
+            // Act
+            var musicParser = new BaseMusicParser(validFilename);
+
+            // Assert
+            var exception = Assert.Throws<NotImplementedException>(() => musicParser.ParseFile());
+            Assert.Equal("ParseFile must be implemented in a derived class.", exception.Message);
+        }
+
+        [Fact]
+        public void Mp3Parser_Init()
+        {
+            string validFilename = "song.mp3";
+
+            var musicParser = new Mp3Parser(validFilename);
+
+            Assert.NotNull(musicParser);
+        }
+
+        [Fact]
+        public void WavParser_Init()
+        {
+            string validFilename = "song.wav";
+
+            var musicParser = new WavParser(validFilename);
+
+            Assert.NotNull(musicParser);
+        }
     }
 }
