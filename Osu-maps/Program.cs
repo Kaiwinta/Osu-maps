@@ -15,7 +15,7 @@ namespace Osu_maps
                 Console.Error.WriteLine("No music file provided, use -m or --music");
                 return 84;
             }
-            BaseMusicParser parser = null;
+            BaseMusicParser parser;
             try
             {
                 if (musicPath.EndsWith("mp3", StringComparison.OrdinalIgnoreCase))
@@ -30,7 +30,7 @@ namespace Osu_maps
                 {
                     throw new ParserInitException("No available parser for this extension");
                 }
-                parser?.ParseFile();
+                parser.ParseFile();
             }
             catch (NotImplementedException ex)
             {
